@@ -114,6 +114,13 @@ public class Main extends javax.swing.JFrame
         jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable1.setShowGrid(false);
         jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0)
         {
@@ -181,6 +188,11 @@ public class Main extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jButton1ActionPerformed
         addDocument();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jTable1MouseClicked
+    {//GEN-HEADEREND:event_jTable1MouseClicked
+
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -710,6 +722,7 @@ public class Main extends javax.swing.JFrame
     private void DeleteDocument(int row)
     {
         String id = tableModel.getValueAt(row, 0).toString();
+
         if (conn.deleteDocument(id) == 200)
         {
             String mensaje = "Elemento " + id + ", eliminado";
@@ -717,6 +730,10 @@ public class Main extends javax.swing.JFrame
         } else
         {
             mostrarMensaje("Error, no se pudo eliminar el documento");
+        }
+        if (jTable1.isEditing())
+        {
+            jTable1.getCellEditor().stopCellEditing();
         }
         tableModel.removeRow(row);
     }
